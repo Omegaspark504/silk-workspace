@@ -191,3 +191,10 @@
   font-size: 0.75rem;
   color: var(--on-surface-variant);
 }
+
+@media (max-width: 768px) {
+  .header {
+    left: 0;
+    padding: 0 1rem;
+  }
+}

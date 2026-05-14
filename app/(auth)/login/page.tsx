@@ -17,8 +17,18 @@ function LoginForm() {
 
   useEffect(() => {
     const err = searchParams.get('error');
-    if (err === 'CredentialsSignin' || err === 'OAuthSignin') {
-      setError('Invalid email or password. Please try again.');
+    if (err) {
+      if (err === 'CredentialsSignin') {
+        setError('Invalid email or password. Please try again.');
+      } else if (err === 'OAuthAccountNotLinked') {
+        setError('This email is already registered with a different sign-in method.');
+      } else if (err === 'OAuthCallback' || err === 'Callback') {
+        setError('Google sign-in failed — please try again. If this keeps happening, check your Google account permissions.');
+      } else if (err === 'Configuration') {
+        setError('Server configuration error. Please contact support.');
+      } else {
+        setError(`Sign-in failed (${err}). Please try again.`);
+      }
     }
     const registered = searchParams.get('registered');
     if (registered) setError('');
@@ -53,8 +63,11 @@ function LoginForm() {
 
   const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
+    setError('');
     try {
       await signIn('google', { callbackUrl: '/inbox' });
+      // If signIn returns without navigating away (shouldn't happen for OAuth, but safety):
+      setGoogleLoading(false);
     } catch {
       setError('Google sign-in failed. Please try again.');
       setGoogleLoading(false);

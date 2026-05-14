@@ -169,3 +169,65 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+/* ─── Mobile bottom navigation ───────────────────────── */
+
+.bottomNav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .bottomNav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(99, 102, 241, 0.12);
+    height: 4.5rem;
+    padding: 0 0.25rem;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -4px 20px rgba(99, 102, 241, 0.08);
+  }
+}
+
+.bottomNavItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--on-surface-variant);
+  text-decoration: none;
+  font-size: 0.65rem;
+  font-weight: 600;
+  font-family: var(--font-label);
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.875rem;
+  transition: all 0.15s ease;
+  flex: 1;
+}
+
+.bottomNavItem .material-symbols-outlined {
+  font-size: 1.5rem !important;
+  transition: font-variation-settings 0.15s;
+}
+
+.bottomNavItem:hover {
+  color: var(--primary);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.bottomNavActive {
+  color: var(--primary) !important;
+}
+

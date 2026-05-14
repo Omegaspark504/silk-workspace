@@ -889,3 +889,34 @@
   filter: brightness(1.1);
   transform: translateY(-1px);
 }
+
+/* ─── Mobile responsive ──────────────────────────────── */
+
+@media (max-width: 768px) {
+  .main {
+    padding: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  .title { font-size: 2rem; }
+
+  /* Always show card action buttons on touch */
+  .cardActions { opacity: 1; }
+
+  /* Drawer becomes a bottom sheet */
+  .drawer {
+    position: fixed;
+    bottom: 4.5rem;
+    left: 0;
+    right: 0;
+    top: auto;
+    width: 100% !important;
+    height: 65vh;
+    border-radius: 1.5rem 1.5rem 0 0;
+    border-left: none;
+    border-bottom: none;
+    border-top: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 0 -8px 32px rgba(99,102,241,0.15);
+    z-index: 55;
+  }
+}

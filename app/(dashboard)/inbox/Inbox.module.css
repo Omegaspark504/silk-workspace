@@ -825,3 +825,97 @@
   opacity: 0.7;
   flex-shrink: 0;
 }
+
+/* ─── Back button (mobile only) ──────────────────────── */
+
+.backBtn {
+  display: none;
+  align-items: center;
+  gap: 0.2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.75rem;
+  transition: background 0.15s;
+  flex-shrink: 0;
+  margin-right: 0.25rem;
+}
+
+.backBtn:hover { background: rgba(99,102,241,0.08); }
+.backBtn span { font-size: 1.35rem !important; }
+
+/* ─── Mobile responsive ──────────────────────────────── */
+
+@media (max-width: 768px) {
+  .main {
+    padding: 0.75rem;
+    gap: 0.5rem;
+    height: calc(100vh - 9.5rem);
+  }
+
+  .gmailSearch { padding: 0; }
+  .gmailSearchInner { max-width: 100%; }
+
+  .columns {
+    flex-direction: column;
+    gap: 0;
+    overflow: visible;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .listCol {
+    width: 100%;
+    overflow-y: auto;
+    flex: 1;
+    padding-bottom: 1rem;
+  }
+
+  /* Hide read pane until a letter is selected */
+  .readCol {
+    display: none;
+  }
+
+  /* When .mainHasActive is set: swap to read-pane-only view */
+  .mainHasActive .listCol { display: none; }
+  .mainHasActive .columns { overflow: hidden; flex: 1; }
+  .mainHasActive .readCol {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    border-radius: 1rem;
+  }
+
+  .backBtn { display: flex; }
+
+  .readHeader {
+    padding: 0.875rem 0.875rem;
+  }
+
+  .readProfile { gap: 0.5rem; }
+  .readName { font-size: 0.95rem; }
+
+  .readMeta {
+    font-size: 0.68rem;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  .readBody {
+    padding: 1.25rem 1rem;
+  }
+
+  .bodyTitle { font-size: 1.2rem; }
+
+  .replyFooter { padding: 0.75rem 0.875rem; }
+
+  .fab {
+    bottom: 5.5rem;
+    right: 1rem;
+    padding: 0.75rem 1.25rem;
+  }
+}

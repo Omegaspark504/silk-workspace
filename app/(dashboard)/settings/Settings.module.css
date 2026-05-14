@@ -444,3 +444,35 @@
 .dangerBtn:hover {
   box-shadow: 0 6px 20px rgba(220,38,38,0.38) !important;
 }
+
+/* ─── Mobile responsive ──────────────────────────────── */
+
+@media (max-width: 768px) {
+  .main {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+    border-radius: 1.25rem;
+  }
+
+  .avatarRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .pageTitle {
+    font-size: 1.6rem;
+  }
+
+  .cardFooter {
+    justify-content: stretch;
+  }
+
+  .submitBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

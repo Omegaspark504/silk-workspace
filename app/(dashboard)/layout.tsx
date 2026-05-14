@@ -1,4 +1,5 @@
 import Sidebar from '../Sidebar';
+import styles from './DashboardLayout.module.css';
 
 export default function DashboardLayout({
   children,
@@ -8,7 +9,7 @@ export default function DashboardLayout({
   return (
     <>
       <Sidebar />
-      <div style={{ marginLeft: '16rem', paddingTop: '5rem', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div className={styles.content}>
         {children}
       </div>
     </>

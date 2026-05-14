@@ -190,7 +190,7 @@ function InboxContent() {
   return (
     <>
       <Header title="Silk Inbox" />
-      <main className={styles.main}>
+      <main className={`${styles.main} ${activeId ? styles.mainHasActive : ''}`}>
 
         {/* ── Gmail-style search bar ─────────────────── */}
         <div className={styles.gmailSearch}>
@@ -259,6 +259,9 @@ function InboxContent() {
           {activeLetter ? (
             <>
               <div className={styles.readHeader}>
+                <button className={styles.backBtn} onClick={() => setActiveId(null)}>
+                  <span className="material-symbols-outlined">arrow_back</span>
+                </button>
                 <div className={styles.readProfile}>
                   <div className={styles.readAvatar}>
                     {activeLetter.avatar

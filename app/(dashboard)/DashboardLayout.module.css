@@ -1,0 +1,14 @@
+.content {
+  margin-left: 16rem;
+  padding-top: 5rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0;
+    padding-bottom: 4.5rem;
+  }
+}

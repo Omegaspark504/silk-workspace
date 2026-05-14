@@ -136,7 +136,7 @@ export default function NotesPage() {
   return (
     <>
       <Header title="Minimalist Workspace" />
-      <main className={styles.main}>
+      <main className={`${styles.main} ${activeId ? styles.mainHasActive : ''}`}>
         <div className={styles.listCol}>
           <div className={styles.listHeader}>
             <h3 className={styles.listTitle}>All Notes</h3>
@@ -178,11 +178,15 @@ export default function NotesPage() {
         <div className={styles.editorCol}>
           {activeNote ? (
             <div className={styles.editorContainer}>
-              <input 
-                className={styles.editorTitle} 
-                type="text" 
-                placeholder="Note Title" 
-                value={activeNote.title} 
+              <button className={styles.backBtn} onClick={() => setActiveId(null)}>
+                <span className="material-symbols-outlined">arrow_back</span>
+                Back to notes
+              </button>
+              <input
+                className={styles.editorTitle}
+                type="text"
+                placeholder="Note Title"
+                value={activeNote.title}
                 onChange={handleTitleChange}
               />
               

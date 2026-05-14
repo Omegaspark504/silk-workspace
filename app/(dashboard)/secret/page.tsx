@@ -202,7 +202,7 @@ export default function SecretPage() {
   return (
     <>
       <Header title="Secret Letters" />
-      <main className={styles.main}>
+      <main className={`${styles.main} ${activeThread ? styles.mainHasActive : ''}`}>
 
         {/* ── Thread list ───────────────────────────── */}
         <div className={styles.listCol}>
@@ -254,6 +254,9 @@ export default function SecretPage() {
           <div className={styles.chatCol}>
             {/* Header */}
             <div className={styles.chatHeader}>
+              <button className={styles.backBtn} onClick={() => setActiveThread(null)}>
+                <span className="material-symbols-outlined">arrow_back</span>
+              </button>
               <div className={styles.chatHeaderAvatar}>
                 {activeThread.other?.image
                   ? <img src={activeThread.other.image} alt={activeThread.other.name} />
