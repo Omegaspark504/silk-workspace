@@ -6,12 +6,11 @@
   position: relative;
   min-height: calc(100vh - 5rem);
   background: transparent;
-  transition: padding-right 0.25s ease;
+  transition: padding-right 0.3s ease;
 }
 
-
 .container {
-  max-width: 1100px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
@@ -21,13 +20,38 @@
   margin-bottom: 2rem;
 }
 
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.headerLeft {
+  flex: 1;
+  min-width: 0;
+}
+
+.headerDate {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+  opacity: 0.7;
+}
+
 .title {
   font-family: var(--font-display);
   font-size: 2.5rem;
   color: var(--primary);
   font-weight: 800;
   letter-spacing: -0.03em;
-  margin-bottom: 0.75rem;
+  line-height: 1;
+  margin-bottom: 0.6rem;
 }
 
 .subtitle {
@@ -36,10 +60,63 @@
   background: rgba(99,102,241,0.08);
   border: 1px solid rgba(99,102,241,0.15);
   display: inline-block;
-  padding: 0.35rem 1.1rem;
+  padding: 0.3rem 1rem;
   border-radius: 9999px;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 500;
+}
+
+/* ─── Progress ring ──────────────────────────────────── */
+
+.progressRing {
+  position: relative;
+  width: 5.5rem;
+  height: 5.5rem;
+  flex-shrink: 0;
+}
+
+.progressRingSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progressRingTrack {
+  fill: none;
+  stroke: rgba(99,102,241,0.1);
+  stroke-width: 3;
+}
+
+.progressRingFill {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.progressRingLabel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-headline);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.progressRingLabel small {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--on-surface-variant);
+  opacity: 0.7;
+  margin-top: 0.15rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 /* ─── Add task bar ───────────────────────────────────── */
@@ -48,18 +125,38 @@
   display: flex;
   align-items: center;
   gap: 0;
-  margin-top: 1.25rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.75);
   border: 1.5px solid rgba(99,102,241,0.18);
   border-radius: 1rem;
-  padding: 0.375rem 0.375rem 0.375rem 1.25rem;
+  padding: 0.375rem 0.375rem 0.375rem 1.1rem;
   height: 3.25rem;
   transition: border-color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.06);
 }
 
 .addInputWrap:focus-within {
   border-color: rgba(99,102,241,0.45);
-  box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.1), 0 2px 8px rgba(99,102,241,0.08);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.addInputPrefix {
+  display: flex;
+  align-items: center;
+  color: var(--on-surface-variant);
+  opacity: 0.4;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
+.addInputWrap:focus-within .addInputPrefix {
+  opacity: 0.7;
+  color: var(--primary);
+}
+
+.addInputPrefix span {
+  font-size: 1.1rem !important;
 }
 
 .addInput {
@@ -76,7 +173,7 @@
 
 .addInput::placeholder {
   color: var(--on-surface-variant);
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
 .addBtn {
@@ -85,7 +182,7 @@
   border: none;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
+  border-radius: 0.75rem;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(99,102,241,0.35);
   display: flex;
@@ -98,82 +195,153 @@
 .addBtn:hover {
   filter: brightness(1.12);
   transform: scale(1.05);
+  border-radius: 50%;
 }
 
 .addBtn:active {
   transform: scale(0.97);
 }
 
-.addBtn .material-symbols-outlined {
+.addBtn span {
   font-size: 1.25rem !important;
 }
 
+/* ─── Section label ──────────────────────────────────── */
 
-/* ─── Task grid ──────────────────────────────────────── */
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.875rem;
 }
 
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-  }
+.sectionLabelText {
+  font-family: var(--font-label);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.65;
+}
+
+.sectionLabelLine {
+  flex: 1;
+  height: 1px;
+  background: rgba(99,102,241,0.1);
+}
+
+/* ─── Task list ──────────────────────────────────────── */
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── Empty state ────────────────────────────────────── */
+
+.emptyTasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: blur(12px);
+  border: 1.5px dashed rgba(99,102,241,0.2);
+  border-radius: 1.5rem;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.emptyTasksIcon {
+  font-size: 2.5rem !important;
+  color: var(--primary);
+  opacity: 0.35;
+}
+
+.emptyTasksText {
+  font-family: var(--font-headline);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--on-surface-variant);
+}
+
+.emptyTasksSub {
+  font-size: 0.8rem;
+  color: var(--on-surface-variant);
+  opacity: 0.6;
 }
 
 /* ─── Task cards ─────────────────────────────────────── */
 
 .card {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.68);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 1.25rem;
-  padding: 1.5rem;
+  border-radius: 1rem;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  align-items: stretch;
   cursor: pointer;
-  transition: all 0.15s ease;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  box-shadow: 0 4px 16px rgba(99,102,241,0.07);
+  transition: all 0.18s ease;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 10px rgba(99,102,241,0.06);
+  overflow: hidden;
+  position: relative;
 }
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(99,102,241,0.12);
-  border-color: rgba(99,102,241,0.2);
+  box-shadow: 0 8px 28px rgba(99,102,241,0.12);
+  border-color: rgba(99,102,241,0.18);
+  background: rgba(255, 255, 255, 0.88);
 }
 
 .card:active {
   transform: translateY(0);
 }
 
-.cardFull {
-  grid-column: 1 / -1;
+/* left accent stripe */
+.cardAccent {
+  width: 4px;
+  flex-shrink: 0;
+  background: rgba(99,102,241,0.15);
+  transition: background 0.2s ease;
+}
+
+.card:hover .cardAccent {
+  background: rgba(99,102,241,0.35);
+}
+
+.cardPrimary .cardAccent {
+  background: var(--primary);
+}
+
+.cardInner {
+  flex: 1;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
 }
 
 .cardTop {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.cardTitleWrap {
-  display: flex;
   align-items: center;
   gap: 0.875rem;
-  flex: 1;
 }
 
 .checkCircle {
   width: 1.75rem;
   height: 1.75rem;
   border-radius: 50%;
-  background: rgba(255,255,255,0.8);
-  border: 1.5px solid rgba(99,102,241,0.2);
+  background: transparent;
+  border: 2px solid rgba(99,102,241,0.22);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -188,42 +356,48 @@
   background: rgba(99,102,241,0.08);
 }
 
-.checkCircle .material-symbols-outlined {
+.checkCircle span {
   font-size: 1rem !important;
 }
 
 .cardTitle {
   font-family: var(--font-headline);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--on-surface);
   flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tag {
-  background: rgba(99,102,241,0.08);
-  border: 1px solid rgba(99,102,241,0.15);
-  padding: 0.2rem 0.85rem;
+  background: rgba(99,102,241,0.07);
+  border: 1px solid rgba(99,102,241,0.13);
+  padding: 0.18rem 0.75rem;
   border-radius: 9999px;
   color: var(--on-surface-variant);
   font-family: var(--font-label);
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.65rem;
+  font-weight: 700;
   flex-shrink: 0;
+  letter-spacing: 0.05em;
 }
 
 .tagPrimary {
   color: var(--primary);
-  background: rgba(99,102,241,0.12);
-  border-color: rgba(99,102,241,0.25);
+  background: rgba(99,102,241,0.1);
+  border-color: rgba(99,102,241,0.22);
 }
 
 .cardDesc {
   font-family: var(--font-body);
   color: var(--on-surface-variant);
-  font-size: 0.875rem;
-  line-height: 1.55;
+  font-size: 0.82rem;
+  line-height: 1.5;
   padding-left: 2.625rem;
+  opacity: 0.8;
 }
 
 /* ─── Progress bar ───────────────────────────────────── */
@@ -234,7 +408,7 @@
 
 .progressBar {
   width: 100%;
-  height: 0.5rem;
+  height: 4px;
   background: rgba(99,102,241,0.1);
   border-radius: 9999px;
   overflow: hidden;
@@ -249,21 +423,24 @@
 
 .progressText {
   font-family: var(--font-label);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--primary);
   font-weight: 700;
   text-align: right;
-  margin-top: 0.4rem;
+  margin-top: 0.35rem;
+  opacity: 0.8;
 }
 
 /* ─── Card action buttons ────────────────────────────── */
 
 .cardActions {
   display: flex;
-  gap: 0.4rem;
-  justify-content: flex-end;
+  flex-direction: column;
+  gap: 0;
+  padding: 0.5rem 0.5rem 0.5rem 0;
   opacity: 0;
   transition: opacity 0.2s;
+  flex-shrink: 0;
 }
 
 .card:hover .cardActions {
@@ -271,12 +448,12 @@
 }
 
 .actionBtn {
-  background: rgba(255,255,255,0.7);
+  background: transparent;
   color: var(--on-surface-variant);
-  border: 1px solid rgba(99,102,241,0.12);
+  border: none;
   width: 2rem;
   height: 2rem;
-  border-radius: 50%;
+  border-radius: 0.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -287,67 +464,95 @@
 .actionBtn:hover {
   color: var(--primary);
   background: rgba(99,102,241,0.08);
-  border-color: rgba(99,102,241,0.25);
 }
 
-.actionBtn .material-symbols-outlined {
+.actionBtn span {
   font-size: 1.1rem !important;
 }
 
 /* ─── Completed section ──────────────────────────────── */
 
-.completedBtn {
-  background: rgba(255, 255, 255, 0.5);
+.completedSection {
+  background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 1.25rem;
-  padding: 1.25rem 1.5rem;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.completedToggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  transition: background 0.15s ease;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  transition: background 0.15s;
 }
 
-.completedBtn:hover {
-  background: rgba(255, 255, 255, 0.7);
+.completedToggle:hover {
+  background: rgba(99,102,241,0.04);
 }
 
-.completedHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.completedTitle {
-  font-family: var(--font-body);
-  color: var(--on-surface-variant);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-weight: 700;
-  font-size: 0.875rem;
-}
-
-.completedIcon {
+.completedChevron {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.25s ease;
   color: var(--on-surface-variant);
-  font-size: 1.1rem !important;
+  opacity: 0.55;
+  font-size: 1.15rem !important;
+}
+
+.completedTitle {
+  font-family: var(--font-label);
+  color: var(--on-surface-variant);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  flex: 1;
+}
+
+.completedCount {
+  background: rgba(99,102,241,0.08);
+  border: 1px solid rgba(99,102,241,0.15);
+  padding: 0.15rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-family: var(--font-label);
+  font-weight: 700;
+  color: var(--on-surface-variant);
+}
+
+.completedList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(99,102,241,0.07);
 }
 
 .completedItem {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  opacity: 0.6;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(99,102,241,0.06);
+  gap: 0.875rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(99,102,241,0.05);
+  cursor: pointer;
+  transition: background 0.15s;
 }
 
-.completedItem:last-of-type { border-bottom: none; }
+.completedItem:last-of-type {
+  border-bottom: none;
+}
+
+.completedItem:hover {
+  background: rgba(99,102,241,0.04);
+}
 
 .completedCheck {
   width: 1.5rem;
@@ -362,23 +567,58 @@
   flex-shrink: 0;
 }
 
-.completedCheck .material-symbols-outlined {
+.completedCheck span {
   font-size: 0.875rem !important;
 }
 
 .completedText {
   font-family: var(--font-body);
-  color: var(--on-surface);
+  color: var(--on-surface-variant);
   font-size: 0.875rem;
   text-decoration: line-through;
-  text-decoration-color: var(--on-surface-variant);
+  text-decoration-color: rgba(99,102,241,0.3);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── Drawer toggle button (when drawer is closed) ───── */
+
+.drawerToggle {
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(99,102,241,0.2);
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--primary);
+  margin-left: 1.5rem;
+  margin-top: 0.25rem;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.15);
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.drawerToggle:hover {
+  background: rgba(255,255,255,0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(99,102,241,0.2);
+}
+
+.drawerToggle span {
+  font-size: 1.2rem !important;
 }
 
 /* ─── Right drawer ───────────────────────────────────── */
 
 .drawer {
   position: fixed;
-  /* Start exactly where the header ends so it never overlaps it */
   top: 5rem;
   right: 0;
   height: calc(100vh - 5rem);
@@ -393,7 +633,6 @@
   flex-direction: column;
   padding: 1.5rem;
 }
-
 
 .drawerHeader {
   display: flex;
@@ -493,6 +732,7 @@
   color: var(--primary);
   font-size: 0.875rem;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .drawerName {

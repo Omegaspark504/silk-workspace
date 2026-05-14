@@ -155,6 +155,16 @@ export default function TodoPage() {
     }
   };
 
+  // Progress ring math
+  const totalTasks = tasks.length;
+  const donePct = totalTasks > 0 ? Math.round((completedTasks.length / totalTasks) * 100) : 0;
+  const circumference = 2 * Math.PI * 15.9; // r=15.9
+  const dashFill = (donePct / 100) * circumference;
+
+  const todayLabel = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric',
+  });
+
   if (isLoading) {
     return (
       <>
@@ -171,115 +181,161 @@ export default function TodoPage() {
       <Header title="Minimalist Workspace" />
       <main className={styles.main} style={{ paddingRight: drawerOpen ? '23rem' : '2rem' }}>
         <div className={styles.container}>
+
+          {/* ── Header ──────────────────────────────── */}
           <header className={styles.header}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div style={{ flex: 1 }}>
+            <div className={styles.headerRow}>
+              <div className={styles.headerLeft}>
+                <p className={styles.headerDate}>{todayLabel}</p>
                 <h2 className={styles.title}>Focus</h2>
-                <p className={styles.subtitle}>{pendingTasks.length} pending tasks for today.</p>
-                
-                <div className={styles.addInputWrap}>
-                  <input 
-                    type="text" 
-                    className={styles.addInput} 
-                    placeholder="Add a new task..." 
-                    value={newTaskTitle}
-                    onChange={(e) => setNewTaskTitle(e.target.value)}
-                    onKeyDown={handleKeyPress}
-                  />
-                  <button className={styles.addBtn} onClick={addTask}>
-                    <span className="material-symbols-outlined">add</span>
-                  </button>
-                </div>
+                <p className={styles.subtitle}>
+                  {pendingTasks.length === 0
+                    ? 'All clear — nothing left to do!'
+                    : `${pendingTasks.length} task${pendingTasks.length !== 1 ? 's' : ''} remaining`}
+                </p>
               </div>
-              {!drawerOpen && (
-                <button 
-                  onClick={() => setDrawerOpen(true)}
-                  style={{
-                    background: 'rgba(255,255,255,0.65)',
-                    backdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(99,102,241,0.2)',
-                    width: '2.75rem', height: '2.75rem', borderRadius: '50%',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    cursor: 'pointer', color: 'var(--primary)',
-                    marginLeft: '1.5rem', marginTop: '0.5rem',
-                    boxShadow: '0 4px 12px rgba(99,102,241,0.15)',
-                    flexShrink: 0,
-                  }}
-                >
-                  <span className="material-symbols-outlined" style={{ fontSize: '1.2rem' }}>mail</span>
-                </button>
-              )}
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                {/* Progress ring */}
+                <div className={styles.progressRing}>
+                  <svg viewBox="0 0 36 36" className={styles.progressRingSvg}>
+                    <circle cx="18" cy="18" r="15.9" className={styles.progressRingTrack} />
+                    <circle
+                      cx="18" cy="18" r="15.9"
+                      className={styles.progressRingFill}
+                      strokeDasharray={`${dashFill} ${circumference - dashFill}`}
+                      strokeDashoffset="0"
+                    />
+                  </svg>
+                  <span className={styles.progressRingLabel}>
+                    {donePct}%
+                    <small>done</small>
+                  </span>
+                </div>
+
+                {/* Drawer toggle */}
+                {!drawerOpen && (
+                  <button className={styles.drawerToggle} onClick={() => setDrawerOpen(true)}>
+                    <span className="material-symbols-outlined">lock</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Add task input */}
+            <div className={styles.addInputWrap}>
+              <div className={styles.addInputPrefix}>
+                <span className="material-symbols-outlined">add_task</span>
+              </div>
+              <input
+                type="text"
+                className={styles.addInput}
+                placeholder="Add a new task and press Enter…"
+                value={newTaskTitle}
+                onChange={(e) => setNewTaskTitle(e.target.value)}
+                onKeyDown={handleKeyPress}
+              />
+              <button className={styles.addBtn} onClick={addTask}>
+                <span className="material-symbols-outlined">add</span>
+              </button>
             </div>
           </header>
 
+          {/* ── Task list ────────────────────────────── */}
+          {pendingTasks.length > 0 && (
+            <div className={styles.sectionLabel}>
+              <span className={styles.sectionLabelText}>Pending</span>
+              <div className={styles.sectionLabelLine} />
+            </div>
+          )}
 
-          <div className={styles.grid}>
-            {pendingTasks.map(task => (
-              <div key={task._id} className={`${styles.card} ${task.progress !== null ? styles.cardFull : ''}`} onClick={() => toggleTask(task._id, task.isCompleted)}>
-                <div className={styles.cardTop}>
-                  <div className={styles.cardTitleWrap}>
-                    <div className={styles.checkCircle}>
-                      <span className="material-symbols-outlined">check</span>
+          {pendingTasks.length === 0 ? (
+            <div className={styles.emptyTasks}>
+              <span className={`material-symbols-outlined ${styles.emptyTasksIcon}`}>task_alt</span>
+              <p className={styles.emptyTasksText}>You&apos;re all caught up!</p>
+              <p className={styles.emptyTasksSub}>Add a new task above to get started.</p>
+            </div>
+          ) : (
+            <div className={styles.taskList}>
+              {pendingTasks.map(task => (
+                <div
+                  key={task._id}
+                  className={`${styles.card} ${task.isPrimary ? styles.cardPrimary : ''}`}
+                  onClick={() => toggleTask(task._id, task.isCompleted)}
+                >
+                  <div className={styles.cardAccent} />
+                  <div className={styles.cardInner}>
+                    <div className={styles.cardTop}>
+                      <div className={styles.checkCircle}>
+                        <span className="material-symbols-outlined">check</span>
+                      </div>
+                      <h3 className={styles.cardTitle}>{task.title}</h3>
+                      <span className={`${styles.tag} ${task.isPrimary ? styles.tagPrimary : ''}`}>
+                        {task.category}
+                      </span>
                     </div>
-                    <h3 className={styles.cardTitle}>{task.title}</h3>
+                    {task.desc && <p className={styles.cardDesc}>{task.desc}</p>}
+                    {task.progress !== null && (
+                      <div className={styles.progressWrap}>
+                        <div className={styles.progressBar}>
+                          <div className={styles.progressFill} style={{ width: `${task.progress}%` }} />
+                        </div>
+                        <p className={styles.progressText}>{task.progress}% complete</p>
+                      </div>
+                    )}
                   </div>
-                  <span className={`${styles.tag} ${task.isPrimary ? styles.tagPrimary : ''}`}>{task.category}</span>
-                </div>
-                {task.desc && <p className={styles.cardDesc}>{task.desc}</p>}
-                
-                {task.progress !== null && (
-                  <div className={styles.progressWrap}>
-                    <div className={styles.progressBar}>
-                      <div className={styles.progressFill} style={{ width: `${task.progress}%` }}></div>
-                    </div>
-                    <p className={styles.progressText}>{task.progress}% complete</p>
+                  <div className={styles.cardActions}>
+                    <button className={styles.actionBtn} onClick={(e) => openEditModal(task, e)}>
+                      <span className="material-symbols-outlined">edit</span>
+                    </button>
+                    <button className={styles.actionBtn} onClick={(e) => deleteTask(task._id, e)}>
+                      <span className="material-symbols-outlined">delete</span>
+                    </button>
                   </div>
-                )}
-                
-                <div className={styles.cardActions}>
-                  <button className={styles.actionBtn} onClick={(e) => openEditModal(task, e)}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '1.25rem' }}>edit</span>
-                  </button>
-                  <button className={styles.actionBtn} onClick={(e) => deleteTask(task._id, e)}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '1.25rem' }}>delete</span>
-                  </button>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
-          <div className={styles.completedBtn} onClick={() => setCompletedOpen(!completedOpen)}>
-            <div className={styles.completedHeader}>
-              <h4 className={styles.completedTitle}>
-                <span 
-                  className={`material-symbols-outlined ${styles.completedIcon}`}
+          {/* ── Completed section ────────────────────── */}
+          {completedTasks.length > 0 && (
+            <div className={styles.completedSection}>
+              <button className={styles.completedToggle} onClick={() => setCompletedOpen(!completedOpen)}>
+                <span
+                  className={`material-symbols-outlined ${styles.completedChevron}`}
                   style={{ transform: completedOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}
                 >
                   chevron_right
                 </span>
-                Completed ({completedTasks.length})
-              </h4>
-            </div>
-            
-            {completedOpen && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
-                {completedTasks.map(task => (
-                  <div key={task._id} className={styles.completedItem} onClick={(e) => { e.stopPropagation(); toggleTask(task._id, task.isCompleted); }}>
-                    <div className={styles.completedCheck}>
-                      <span className="material-symbols-outlined">check</span>
-                    </div>
-                    <h3 className={styles.completedText}>{task.title}</h3>
-                    
-                    <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
-                      <button className={styles.actionBtn} onClick={(e) => deleteTask(task._id, e)} style={{ opacity: 0.5 }}>
-                        <span className="material-symbols-outlined" style={{ fontSize: '1.25rem' }}>delete</span>
+                <span className={styles.completedTitle}>Completed</span>
+                <span className={styles.completedCount}>{completedTasks.length}</span>
+              </button>
+
+              {completedOpen && (
+                <div className={styles.completedList}>
+                  {completedTasks.map(task => (
+                    <div
+                      key={task._id}
+                      className={styles.completedItem}
+                      onClick={(e) => { e.stopPropagation(); toggleTask(task._id, task.isCompleted); }}
+                    >
+                      <div className={styles.completedCheck}>
+                        <span className="material-symbols-outlined">check</span>
+                      </div>
+                      <h3 className={styles.completedText}>{task.title}</h3>
+                      <button
+                        className={styles.actionBtn}
+                        onClick={(e) => deleteTask(task._id, e)}
+                        style={{ opacity: 0.45, marginLeft: 'auto' }}
+                      >
+                        <span className="material-symbols-outlined">delete</span>
                       </button>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
         
         {drawerOpen && (
