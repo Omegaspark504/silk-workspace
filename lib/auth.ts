@@ -5,11 +5,9 @@ import bcrypt from 'bcryptjs';
 import dbConnect from './mongodb';
 import User from '../models/User';
 
-const googleClientId = process.env.GOOGLE_CLIENT_ID;
-const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
-if (!googleClientId || !googleClientSecret) {
-  throw new Error('Missing Google OAuth credentials in environment variables');
-}
+// Fall back to empty string at build time; NextAuth will reject auth attempts at runtime if missing
+const googleClientId = process.env.GOOGLE_CLIENT_ID ?? '';
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET ?? '';
 
 export const authOptions: NextAuthOptions = {
   providers: [
