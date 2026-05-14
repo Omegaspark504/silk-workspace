@@ -1,0 +1,304 @@
+/* ─── Layout ─────────────────────────────────────────── */
+
+.main {
+  flex: 1;
+  display: flex;
+  height: calc(100vh - 5rem);
+  background: transparent;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+/* ─── Left list column ───────────────────────────────── */
+
+.listCol {
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow-y: auto;
+  padding-bottom: 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99,102,241,0.2) transparent;
+}
+
+.listCol::-webkit-scrollbar { width: 4px; }
+.listCol::-webkit-scrollbar-track { background: transparent; }
+.listCol::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.25); border-radius: 9999px; }
+
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.25rem 0;
+  flex-shrink: 0;
+}
+
+.listTitle {
+  color: var(--on-surface-variant);
+  font-weight: 700;
+  font-size: 0.7rem;
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.addBtn {
+  color: var(--on-primary);
+  background: var(--primary);
+  padding: 0.4rem;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 12px rgba(99,102,241,0.35);
+  flex-shrink: 0;
+}
+
+.addBtn:hover {
+  filter: brightness(1.12);
+  transform: scale(1.08);
+}
+
+.addBtn:active {
+  transform: scale(0.96);
+}
+
+.addBtn .material-symbols-outlined {
+  font-size: 1.1rem !important;
+}
+
+/* ─── Card group container ───────────────────────────── */
+
+.cardGroup {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 4px 24px rgba(99,102,241,0.07), 0 1px 0 rgba(255,255,255,0.9) inset;
+  overflow: hidden;
+}
+
+/* ─── Note cards ─────────────────────────────────────── */
+
+.card {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(99,102,241,0.08);
+  padding: 1rem 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-radius: 0;
+}
+
+.card:last-of-type { border-bottom: none; }
+
+.card:hover { background: rgba(99,102,241,0.05); }
+
+.cardActive {
+  background: rgba(99,102,241,0.1) !important;
+  border-left: 3px solid var(--primary);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.3rem;
+}
+
+.cardTitle {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  color: var(--on-surface);
+  font-size: 0.875rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.cardTitleActive {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.875rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.cardTime {
+  font-size: 0.6rem;
+  font-family: var(--font-label);
+  color: var(--on-surface-variant);
+  margin-left: 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cardPreview {
+  font-size: 0.8rem;
+  color: var(--on-surface-variant);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardTags {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  font-family: var(--font-label);
+  background: rgba(99,102,241,0.08);
+  color: var(--on-surface-variant);
+  border: 1px solid rgba(99,102,241,0.12);
+}
+
+.tagActive {
+  background: rgba(99,102,241,0.15);
+  color: var(--primary);
+  border-color: rgba(99,102,241,0.3);
+}
+
+/* ─── Editor column ──────────────────────────────────── */
+
+.editorCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 8px 32px rgba(99,102,241,0.08), 0 1px 0 rgba(255,255,255,0.9) inset;
+  overflow: hidden;
+}
+
+.editorContainer {
+  flex: 1;
+  max-width: 52rem;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99,102,241,0.15) transparent;
+}
+
+.editorContainer::-webkit-scrollbar { width: 4px; }
+.editorContainer::-webkit-scrollbar-track { background: transparent; }
+.editorContainer::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.2); border-radius: 9999px; }
+
+.editorTitle {
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--on-surface);
+  outline: none;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.editorTitle::placeholder {
+  color: rgba(88, 90, 104, 0.35);
+}
+
+.editorMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(99,102,241,0.08);
+  flex-wrap: wrap;
+}
+
+.metaBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(99,102,241,0.08);
+  border: 1px solid rgba(99,102,241,0.15);
+  padding: 0.35rem 0.875rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  color: var(--on-surface-variant);
+  font-weight: 500;
+}
+
+.metaBadge .material-symbols-outlined {
+  font-size: 0.9rem !important;
+}
+
+.metaFolder {
+  color: var(--primary);
+  cursor: pointer;
+  border-color: rgba(99,102,241,0.25);
+}
+
+.editorContent {
+  width: 100%;
+  flex: 1;
+  min-height: 300px;
+  background: transparent;
+  border: none;
+  resize: none;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: rgba(46, 48, 64, 0.85);
+  line-height: 1.85;
+  font-weight: 500;
+  outline: none;
+}
+
+.deleteBtn {
+  background: rgba(255,255,255,0.65);
+  color: var(--on-surface-variant);
+  border: 1px solid rgba(99,102,241,0.12);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  transition: all 0.15s ease;
+}
+
+.deleteBtn:hover {
+  color: var(--error);
+  background: rgba(220, 38, 38, 0.08);
+  border-color: rgba(220, 38, 38, 0.2);
+  transform: scale(1.05);
+}

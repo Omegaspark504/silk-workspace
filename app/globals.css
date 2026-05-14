@@ -1,0 +1,142 @@
+:root {
+  --background: #e8eaf0;
+  --on-background: #2e3040;
+  --surface: #e8eaf0;
+  --on-surface: #2e3040;
+  --surface-variant: #dcdee4;
+  --on-surface-variant: #585a68;
+  --primary: #6366f1;
+  --on-primary: #ffffff;
+  --error: #dc2626;
+  --on-error: #ffffff;
+  --surface-container-lowest: #f0f2f8;
+  --outline-variant: #d0d2dc;
+  --primary-container: #818cf8;
+  --surface-bright: #edeef4;
+  --error-container: #fee2e2;
+  --primary-fixed: #e0e2ff;
+  --surface-container-high: #dcdee4;
+  --surface-container-low: #e5e7ed;
+  --secondary-container: #d8dae6;
+  --secondary: #6c6e7e;
+  --surface-tint: #6366f1;
+  --surface-container-highest: #d6d8de;
+  --surface-container: #e2e4ea;
+  
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-headline: 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-label: 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Rich silk gradient — warm lavender → blush rose → cool periwinkle */
+  background: linear-gradient(
+    145deg,
+    #dfe3ff 0%,
+    #ede5f8 20%,
+    #f5e0f0 38%,
+    #ead5f5 55%,
+    #d8e4ff 75%,
+    #e2f0ff 100%
+  );
+  background-attachment: fixed;
+  min-height: 100%;
+}
+
+
+body {
+  background: transparent;
+  color: var(--on-background);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar hide */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Typography Utilities */
+.text-primary { color: var(--primary); }
+.text-on-surface { color: var(--on-surface); }
+.text-on-surface-variant { color: var(--on-surface-variant); }
+.text-on-primary { color: var(--on-primary); }
+.bg-background { background-color: var(--background); }
+.bg-primary { background-color: var(--primary); }
+
+/* Neomorphic Styles */
+.neo-card {
+    background: var(--background);
+    border: none;
+    box-shadow: 8px 8px 16px #cdd0d8, -8px -8px 16px #ffffff;
+    transition: box-shadow 0.3s ease;
+}
+.neo-card:hover {
+    box-shadow: 10px 10px 20px #cdd0d8, -10px -10px 20px #ffffff;
+}
+.neo-inset {
+    background: var(--background);
+    border: none;
+    box-shadow: inset 6px 6px 12px #cdd0d8, inset -6px -6px 12px #ffffff;
+}
+.neo-btn {
+    background: var(--background);
+    border: none;
+    box-shadow: 6px 6px 12px #cdd0d8, -6px -6px 12px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+.neo-btn:hover {
+    box-shadow: 8px 8px 16px #cdd0d8, -8px -8px 16px #ffffff;
+}
+.neo-btn:active, .neo-btn.active {
+    box-shadow: inset 4px 4px 8px #cdd0d8, inset -4px -4px 8px #ffffff;
+}
+.neo-circle {
+    background: var(--background);
+    border: none;
+    box-shadow: 4px 4px 8px #cdd0d8, -4px -4px 8px #ffffff;
+}
+.neo-circle-inset {
+    background: var(--background);
+    border: none;
+    box-shadow: inset 4px 4px 8px #cdd0d8, inset -4px -4px 8px #ffffff;
+}
+.neo-shadow {
+    box-shadow: 6px 6px 12px #cfd1d8, -6px -6px 12px #ffffff;
+}
+.neo-shadow-inset {
+    box-shadow: inset 6px 6px 12px #cfd1d8, inset -6px -6px 12px #ffffff;
+}
+.neo-shadow-sm {
+    box-shadow: 3px 3px 6px #cfd1d8, -3px -3px 6px #ffffff;
+}
+
+/* Material Icons */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
